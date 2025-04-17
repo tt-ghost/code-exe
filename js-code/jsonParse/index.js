@@ -1,5 +1,5 @@
 /* JSON.parse */
-function myJSONParse(jsonString, reviver) {
+function jsonParse(jsonString, reviver) {
   let index = 0;
   const escapeMap = { 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t' };
 
@@ -35,8 +35,12 @@ function myJSONParse(jsonString, reviver) {
     while (currentChar() !== '}') {
       const key = parseString();
       expect(':');
+      skipWhitespace();
       obj[key] = parseValue();
-      if (currentChar() === ',') nextChar();
+      if (currentChar() === ',') {
+        nextChar();
+        skipWhitespace();
+      }
     }
     expect('}');
     return obj;
@@ -46,8 +50,13 @@ function myJSONParse(jsonString, reviver) {
     const arr = [];
     expect('[');
     while (currentChar() !== ']') {
+      skipWhitespace();
       arr.push(parseValue());
-      if (currentChar() === ',') nextChar();
+      skipWhitespace();
+      if (currentChar() === ',') {
+        nextChar();
+        skipWhitespace();
+      }
     }
     expect(']');
     return arr;
@@ -88,6 +97,23 @@ function myJSONParse(jsonString, reviver) {
       throw new SyntaxError(`Unexpected token ${currentChar()}`);
     }
     nextChar();
+  }
+
+  // 自定义扩展
+  function applyReviver(obj, reviver) {
+    if (typeof obj === 'object' && obj !== null) {
+      for (const key in obj) {
+        const value = applyReviver(obj[key], reviver);
+        const newValue = reviver.call(obj, key, value);
+        if (newValue === undefined) {
+          delete obj[key];
+        } else {
+          obj[key] = newValue;
+        }
+      }
+    }
+    const $key = Symbol('key')
+    return reviver.call({[$key]: obj}, $key, obj);
   }
 
   const result = parseValue();
