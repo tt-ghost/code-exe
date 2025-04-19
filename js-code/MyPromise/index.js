@@ -72,6 +72,7 @@ class MyPromise {
     );
   }
 
+
   // 静态方法
   static resolve(value) {
     if (value instanceof MyPromise) return value;
@@ -125,6 +126,21 @@ class MyPromise {
       promises.forEach(p => {
         MyPromise.resolve(p).then(resolve, reject);
       });
+    });
+  }
+
+  static try(func, ...args) {
+    return new MyPromise((resolve, reject) => {
+      try {
+        const result = func(...args);
+        if (result instanceof Promise) {
+          result.then(resolve, reject);
+        } else {
+          resolve(result);
+        }
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 }
