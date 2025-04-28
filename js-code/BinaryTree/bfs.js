@@ -35,3 +35,28 @@ function levelBfs(root) {
   }
   return result;
 }
+
+/* 构建测试树
+    1
+   /\
+  2  3
+ /\  /\
+4 5 6  7
+*/
+function TreeNode(value) {
+  this.value = value;
+  this.left = this.right = null;
+}
+
+const root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(3);
+root.left.left = new TreeNode(4);
+root.left.right = new TreeNode(5);
+root.right.left = new TreeNode(6);
+root.right.right = new TreeNode(7);
+
+// 广度遍历结果：[1,2,3,4,5,6,7]
+console.log('广度遍历', bfs(root));
+// 广度分层遍历结果：[[1],[2,3],[4,5,6,7]]
+console.log('广度遍历（分层）', levelBfs(root));
