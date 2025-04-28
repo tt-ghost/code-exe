@@ -4,21 +4,20 @@ function TreeNode(value) {
 }
 
 // 递归实现
-function preOrderEach(root) {
+function preOrder(root) {
   const result = []
   const loop = (node) => {
     if (node === null) return
     result.push(node.value)
-    if (node.left !== null) preOrderEach(node.left)
-    if (node.right !== null) preOrderEach(node.right)
-    
+    if (node.left !== null) loop(node.left)
+    if (node.right !== null) loop(node.right)
   }
   loop(root)
   return result
 }
 
 // 迭代实现
-function loopPreOrderEach(root) {
+function loopPreOrder(root) {
   const result = []
   if (root === null) return result
   const stack = [root]
@@ -48,5 +47,5 @@ root.right.left = new TreeNode(6);
 root.right.right = new TreeNode(7);
 
 // 输出后序遍历结果：[1,2,4,5,3,6,7]
-console.log('前序遍历（递归）：', preOrderEach(root)); 
-console.log('前序遍历（迭代）：', loopPreOrderEach(root)); 
+console.log('前序遍历（递归）：', preOrder(root)); 
+console.log('前序遍历（迭代）：', loopPreOrder(root)); 
