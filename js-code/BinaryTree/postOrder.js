@@ -1,6 +1,6 @@
 function TreeNode(value) {
-    this.value = value;
-    this.left = this.right = null;
+  this.value = value;
+  this.left = this.right = null;
 }
 
 // 递归实现
