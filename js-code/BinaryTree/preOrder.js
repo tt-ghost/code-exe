@@ -64,7 +64,7 @@ root.left.right = new TreeNode(5);
 root.right.left = new TreeNode(6);
 root.right.right = new TreeNode(7);
 
-// 输出后序遍历结果：[1,2,4,5,3,6,7]
+// 输出前序遍历结果：[1,2,4,5,3,6,7]
 console.log('前序遍历（递归）：', preOrder(root)); 
 console.log('前序遍历（迭代：单栈法）：', loopPreOrder(root)); 
 console.log('前序遍历（迭代：统一迭代法）：', loopPreOrder2(root)); 
