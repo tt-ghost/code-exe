@@ -1,23 +1,28 @@
-function TreeNode(val) {
-    this.val = val;
+function TreeNode(value) {
+    this.value = value;
     this.left = this.right = null;
 }
 
 // 递归实现
 function preOrderEach(root) {
-  if (root===null) return
-  console.log(root.val)
-  if (root.left !== null) preOrderEach(root.left)
-  if (root.right !== null) preOrderEach(root.right)
+  const result = []
+  const loop = (node) => {
+    if (node === null) return
+    if (node.left !== null) preOrderEach(node.left)
+    if (node.right !== null) preOrderEach(node.right)
+    result.push(node.value)
+  }
+  return result
 }
 
 // 迭代实现
 function loopPreOrderEach(root) {
   if (root === null) return
   const stack = [root]
+  const result = []
   while(stack.length) {
     const node = stack.pop()
-    console.log(node.val)
+    result.push(node.value)
     if (node.right !== null) stack.push(node.right)
     if (node.left !== null) stack.push(node.left)
   }
