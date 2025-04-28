@@ -1,8 +1,3 @@
-function TreeNode(value) {
-  this.value = value;
-  this.left = this.right = null;
-}
-
 // 递归实现
 function postOrder(root) {
   const result = []
@@ -59,7 +54,10 @@ function loopPostOrder2(root) {
  /\  /\
 4 5 6  7
 */
-
+function TreeNode(value) {
+  this.value = value;
+  this.left = this.right = null;
+}
 const root = new TreeNode(1);
 root.left = new TreeNode(2);
 root.right = new TreeNode(3);
