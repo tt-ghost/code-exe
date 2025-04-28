@@ -1,32 +1,55 @@
-function TreeNode(val) {
-    this.val = val;
+function TreeNode(value) {
+    this.value = value;
     this.left = this.right = null;
 }
 
 // 递归实现
-function postOrderEach(root) {
+function postOrder(root) {
   const result = []
   const loop = (node) => {
     if (node === null) return
-    if (node.left !== null) preOrderEach(node.left)
-    if (node.right !== null) preOrderEach(node.right)
+    if (node.left !== null) loop(node.left)
+    if (node.right !== null) loop(node.right)
     result.push(node.value)
   }
+  loop(root)
   return result
 }
 
-// 迭代实现
-function loopPostOrderEach(root) {
-  if (root === null) return
+// 迭代实现：单栈法（前序变种反转）
+function loopPostOrder(root) {
   const result = []
+  if (root === null) return result
   const stack = [root]
+
   while(stack.length) {
     const node = stack.pop()
-    result.push(node.val)
-    if (node.right !== null) stack.push(node.right)
-    if (node.left !== null) stack.push(node.left)
+    // 先记录根节点值
+    result.push(node.value)
+    // 左子节点先入栈
+    if (node.left) stack.push(node.left)
+    // 右子节点后入栈
+    if (node.right) stack.push(node.right)
   }
-  return result
+  // 反转后得到后序序列
+  return result.reverse()
+}
+
+// 迭代实现：双栈法​
+function loopPostOrder2(root) {
+  if (!root) return [];
+    const stack1 = [root], stack2 = [];
+    while (stack1.length) {
+      const node = stack1.pop();
+      // 根节点暂存到 stack2
+      stack2.push(node);
+      // 左子节点先入栈  
+      if (node.left) stack1.push(node.left);
+      // 右子节点后入栈  
+      if (node.right) stack1.push(node.right);
+    }
+    // 反转得到左 → 右 → 根
+    return stack2.reverse().map(n => n.value);
 }
 
 /* 构建测试树
@@ -46,4 +69,6 @@ root.right.left = new TreeNode(6);
 root.right.right = new TreeNode(7);
 
 // 输出后序遍历结果：[4,5,2,6,7,3,1]
-console.log(postOrderEach(root)); 
+console.log('后序遍历（递归）', postOrder(root));
+console.log('后序遍历（迭代：单栈法）', loopPostOrder(root)); 
+console.log('后序遍历（迭代：双栈法​）', loopPostOrder2(root)); 
