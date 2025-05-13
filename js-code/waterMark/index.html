@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>水印测试</title>
+    <style>
+      body{height: 100%;}
+    </style>
+  </head>
+  <body>
+    <script>
+      function createDOMWatermark(text) {
+        const watermark = document.createElement('div');
+        watermark.style.position = 'fixed';
+        watermark.style.top = '0';
+        watermark.style.left = '0';
+        watermark.style.width = '100%';
+        watermark.style.height = '100%';
+        watermark.style.pointerEvents = 'none';
+        watermark.style.background = `repeating-linear-gradient(
+          -45deg, 
+          rgba(0,0,0,0.1), 
+          rgba(0,0,0,0.1) 20px, 
+          transparent 20px, 
+          transparent 40px
+        )`;
+        watermark.innerHTML = `<div style="
+          transform: rotate(-30deg);
+          color: rgba(0,0,0,0.3);
+          font-size: 24px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+        ">${text}</div>`;
+        document.body.appendChild(watermark);
+      }
+      createDOMWatermark('水印示例')
+    </script>
+  </body>
+</html>
